@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 // import { View, StyleSheet } from 'react-native';
 // import LinearGradient from 'react-native-linear-gradient';
 
-import { Container, Header, Content, Form, Item, Input, Button, Text } from 'native-base';
+import { Container, Header, Content, Form, Item, Input, Button, Text, Body } from 'native-base';
 
 
 export default class LoginScreeen extends Component {
@@ -29,29 +29,53 @@ export default class LoginScreeen extends Component {
 // }
 
 saveCustomer = () => {
-  var data = new Headers();
-  data.append('Accept', 'application/json')
-  data.append('uid', this.state.uid)
-  data.append('name', this.state.name)
-  data.append('email', this.state.email)
-  data.append('password', this.state.password)
 
-  return fetch('http://192.168.1.187:3000/user/', {
-      method: 'POST',
-      headers: data
-  }).then((response) => response.json()).then((resp) => {
-      if (resp.affectedRows > 0) {
-          Alert.alert('User Added')
-      }
-  }).catch((errr) => {
-      console.log("Failed")
-  })
+  fetch('http://192.168.1.187:3000/user/saveuser', {
+  method: 'POST',
+  body: JSON.stringify({
+    uid: this.state.uid ,
+    name: this.state.name,
+    email: this.state.email,
+    password: this.state.password
+  }),
+  headers: {
+     Accept : 'application/json',
+    'Content-type': 'application/json'
+  },
+})
+  .then((response) => response.json())
+  .then((json) => console.log(json));
+  // var data = new Body();
+  // data.append('Accept', 'application/json')
+  // data.append('uid', this.state.uid)
+  // data.append('name', this.state.name)
+  // data.append('email', this.state.email)
+  // data.append('password', this.state.password)
+
+  // return fetch('http://192.168.1.187:3000/user', {
+  //     method: 'POST',
+  //     body: data
+  // }).then((response) => response.json()).then((resp) => {
+  //     if (resp.affectedRows > 0) {
+  //         Alert.alert('User Added')
+  //     }
+  // }).catch((errr) => {
+  //     console.log("Failed")
+  // })
 }
 
+
+
 getData(){
-  fetch('http://192.168.1.187:3000/user/oneuser/C001',{ method: 'GET'})
+  fetch('http://192.168.1.187:3000/user/allusers',{ method: 'GET'})
 .then((response) => response.json())
 .then((json) => console.log(json))
+}
+
+
+submitHandler = (e) =>{
+  e.preventDefault()
+  console.log(this.state);
 }
 
 
@@ -63,10 +87,13 @@ getData(){
             <Container>
                     <Header />
                     <Content>
-                      <Form>
+                      <Form onSubmit = {this.submitHandler}>
                         <Item>
                           <Input placeholder="Useid" 
                           value={this.state.uid}
+                          type = "text"
+                          name = "uid"
+                          // onChange = {this.changeHandler}
                           onChangeText={(value) => {
                               this.setState({
                                 uid: value
@@ -77,6 +104,9 @@ getData(){
                         <Item>
                           <Input placeholder="Username" 
                           value={this.state.name}
+                          type = "text"
+                          name = "name"
+                          // onChange = {this.changeHandler}
                           onChangeText={(value) => {
                               this.setState({
                                 name: value
@@ -87,6 +117,9 @@ getData(){
                         <Item>
                           <Input placeholder="email" 
                           value={this.state.email}
+                          type = "text"
+                          name = "email"
+                          // onChange = {this.changeHandler}
                           onChangeText={(value) => {
                               this.setState({
                                 email: value
@@ -97,6 +130,9 @@ getData(){
                         <Item last>
                           <Input placeholder="Password" 
                           value={this.state.password}
+                          type = "text"
+                          name = "password"
+                          // onChange = {this.changeHandler}
                           onChangeText={(value) => {
                               this.setState({
                                 password: value
@@ -105,7 +141,8 @@ getData(){
                           />
                         </Item>
                         <Button
-                        onPress={this.getData}
+                        onPress={this.saveCustomer}
+                        type = "submit"
                         >
                           <Text>SignUp</Text>
                        </Button>

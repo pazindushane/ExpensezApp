@@ -10,23 +10,26 @@ router.get("/allusers", async (req, res) => {
 
   
 
-  router.post("/", async (req, res) => {
-    const data = await User.create(req);
-    res.send(data);
+  router.post("/saveuser", async (req, res) => {
+
+    const users = new User(req.body);
+    await users.save();
+    res.send({ data: users });
+    // console.log(data);
   });
 
-  router.get("/oneuser/:id", async (req, res) => {
+  router.get("/oneuser/:uid", async (req, res) => {
     try {
-      const users = await User.findById(req.params.id);
+      const users = await User.findOne(req.params);
       res.send({ data: users });
     } catch {
       res.status(404).send({ error: "user not found!" });
     }
   });
 
-  router.patch("/updateuser/:id", async (req, res) => {
+  router.patch("/updateuser/:uid", async (req, res) => {
     try {
-      const users = await User.findById(req.params.id);
+      const users = await User.findOne(req.params);
       Object.assign(users, req.body);
       users.save();
       res.send({ data: users });

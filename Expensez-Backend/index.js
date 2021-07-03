@@ -8,7 +8,7 @@ const user = require('./routes/user-routs')
 mongoose.connect("mongodb://localhost:27017/expensez", { 
     useNewUrlParser: true }).then(() => {
 
-    const bodyPaser=require('body-parser')
+    const bodyPaser = require('body-parser')
     const app = express()
 
     app.use(bodyPaser.json())
