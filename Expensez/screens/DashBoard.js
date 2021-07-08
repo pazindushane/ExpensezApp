@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import {  View, StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Container, Header, Content, Footer, FooterTab, Button, Icon, Text } from 'native-base';
+import { Container, Header, Content, Footer, FooterTab, Button, Icon, Text, Row } from 'native-base';
+import FontAwesome, { SolidIcons, RegularIcons, BrandIcons } from 'react-native-fontawesome';
+import AccountScreen from './AccountScreen';
+import DataInputScreen from './DataInputScreen';
+import ReportScreen from './ReportScreen';
+import RecordScreen from './RecordScreen';
+import GlobalFont from 'react-native-global-font';
 
 const Tab = createBottomTabNavigator();
 
@@ -14,60 +19,86 @@ export default class DashBoard extends Component {
     };
   }
 
+  componentDidMount() {
+    let fontName = 'Quicksand-SemiBold'
+    GlobalFont.applyGlobal(fontName)
+}
+
   render() {
+    // const { uidd } = this.props.route.params;
     return (
-      <NavigationContainer>
-      <Tab.Navigator tabBarOptions={{
+        
+
+      <Tab.Navigator     tabBarOptions={{
+        
           showLabel: false,
           style: {
-              backgroundColor: '#16DB65',
-              height:60
+              backgroundColor: '#287BFF',
+              height:65
           }
       }}>
-          <Tab.Screen name="ExpensesScren" component={ExpensesScren}
-              options={
-                  {
-                      tabBarIcon: ({ focused }) => (
-                          <View >
-                               <Icon type="FontAwesome" name="exchange" />
-                              <Text style={{ color: focused ? 'black' : 'white' }}>Expenses</Text>
-                          </View>
-                      )
-                  }
-              } />
-          <Tab.Screen name="ReportScreen" component={ReportScreen} options={
-              {
-                  tabBarIcon: ({ focused }) => (
-                      <View>
-                           <Icon type="FontAwesome" name="home" />
-                          <Text style={{ color: focused ? 'black' : 'white' }}>Income</Text>
-                      </View>
-                  ),
-              }
-          } />
-          <Tab.Screen name="DataInputScreen" component={DataInputScreen} options={
-              {
-                  tabBarIcon: ({ focused }) => (
-                      <View>
-                           <Icon type="FontAwesome" name="align-center" />
-                          <Text style={{ color: focused ? 'black' : 'white' }}>Report</Text>
-                      </View>
-                  ),
-              }
-          } />
-          <Tab.Screen name="AccountScreenw" component={AccountScreen} options={
-              {
-                  tabBarIcon: ({ focused }) => (
-                      <View>
-                           <Icon type="FontAwesome" name="user" />
-                          <Text style={{ color: focused ? 'black' : 'white' }}>Account</Text>
-                      </View>
-                  ),
-              }
-          } />
-          
-      </Tab.Navigator>
-  </NavigationContainer>
-    );
-  }
+          {/* <header>
+            <text>{uidd}</text>
+          </header> */}
+          <Tab.Screen name="ReportScree" component={ReportScreen}   options={ 
+                    {  
+                        tabBarIcon: ({ focused }) => (
+                            <View style={styles.root}>
+                               
+                                 <Icon type="FontAwesome" name="money" style={{ color: focused ? 'black' : 'white' }} />
+                                <Text style={{ color: focused ? 'black' : 'white',fontSize:15, fontFamily:'Quicksand-SemiBold' }}>Report</Text>
+                            </View>
+                        ),
+                    }
+                } />
+                <Tab.Screen name="DataInputScreen" component={DataInputScreen}  
+                    options={
+                        
+                        {
+                            
+                            tabBarIcon: ({ focused }) => (
+                                <View style={styles.root}>
+                                    {/* <i class="fas fa-file-invoice-dollar"></i> */}
+                                     <Icon type="FontAwesome" name="pencil" style={{ color: focused ? 'black' : 'white' }} />
+                                    <Text style={{ color: focused ? 'black' : 'white',fontSize:15, fontFamily:'Quicksand-SemiBold' }}>Input</Text>
+                                </View>
+                            )
+                        }
+                    } />
+                <Tab.Screen name="RecordScreen" component={RecordScreen}  options={
+                    {
+                        tabBarIcon: ({ focused }) => (
+                            <View style={styles.root}>
+                                 <Icon type="FontAwesome" name="book" style={{ color: focused ? 'black' : 'white' }} />
+                                <Text style={{ color: focused ? 'black' : 'white',fontSize:15, fontFamily:'Quicksand-SemiBold' }}>Records</Text>
+                            </View>
+                        ),
+                    }
+                } />
+                
+                <Tab.Screen name="AccountScreenw" component={AccountScreen}  options={
+                    {
+                        
+                        tabBarIcon: ({ focused }) => (
+                            <View style={styles.root}>
+                                 <Icon type="FontAwesome" name="user-circle" style={{ color: focused ? 'black' : 'white'}} />
+                                <Text style={{ color: focused ? 'black' : 'white' ,fontSize:15, fontFamily:'Quicksand-SemiBold'}}>Profile</Text>
+                            </View>
+                        ),
+                    }
+                } />
+                
+            </Tab.Navigator>
+        
+        )
+    }
 }
+
+const styles = StyleSheet.create({
+    root:{
+        justifyContent:'center',
+        alignContent:'center',
+        alignItems:'center',
+        
+    }
+})

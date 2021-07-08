@@ -2,33 +2,40 @@ import 'react-native-gesture-handler';
 import React, { Component } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-// import {NativeModules} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import  LoginScreeen  from './screens/LoginScreeen';
+import  LoginScreeno  from './screens/LoginScreeno';
 import  SignupScreen  from './screens/SignupScreen';
+import  DashBoard  from './screens/DashBoard';
+import  Forgotpassword  from './screens/Forgotpassword';
+import  Recoverpassword  from './screens/Recoverpassword';
+// import  DataInputScreen  from './screens/DataInputScreen';
 
-// import { LogBox } from 'react-native';
 
-// LogBox.ignoreLogs([
-//     'Require cycle:'
-// ])
-
-// import { YellowBox } from 'react-native'
-
-// YellowBox.ignoreWarnings([
-//   'Require cycle:'
-// ])
 
 const Stack = createStackNavigator();
 
-// const reactnativepopupdialog = NativeModules.react-native-popup-dialog;
+
 
 export default class App extends Component {
+  
+  
+      
+     
+  
   render() {
+        
+    
+    
     return (
       <NavigationContainer>
         <Stack.Navigator >
-          <Stack.Screen options={{headerShown: false}} name="LoginScreeen" component={LoginScreeen}  />
+          <Stack.Screen options={{headerShown: false}} name="LoginScreeno" component={LoginScreeno}  />
+          <Stack.Screen options={{headerShown: false}}  name="DashBoard" component={DashBoard}  />
           <Stack.Screen options={{headerShown: false}} name="SignupScreen" component={SignupScreen} />
+          <Stack.Screen options={{headerShown: false}} name="Forgotpassword" component={Forgotpassword} />
+          <Stack.Screen options={{headerShown: false}} name="Recoverpassword" component={Recoverpassword} />
+          {/* <Stack.Screen options={{headerShown: false}} name="DataInputScreen" component={DataInputScreen} /> */}
         </Stack.Navigator>
     </NavigationContainer>
     );

@@ -4,6 +4,7 @@ var cors = require('cors');
 const port = 3000
 
 const user = require('./routes/user-routs')
+const expenses = require('./routes/expenses-routs')
 
 mongoose.connect("mongodb://localhost:27017/expensez", { 
     useNewUrlParser: true }).then(() => {
@@ -15,6 +16,7 @@ mongoose.connect("mongodb://localhost:27017/expensez", {
     app.use(bodyPaser.urlencoded({extends:true}))
 
     app.use('/user', user)
+    app.use('/expenses', expenses)
 
     app.use(cors())
 

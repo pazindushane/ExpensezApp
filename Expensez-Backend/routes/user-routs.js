@@ -27,7 +27,7 @@ router.get("/allusers", async (req, res) => {
     }
   });
 
-  router.patch("/updateuser/:uid", async (req, res) => {
+  router.put("/updateuser/:uid", async (req, res) => {
     try {
       const users = await User.findOne(req.params);
       Object.assign(users, req.body);
