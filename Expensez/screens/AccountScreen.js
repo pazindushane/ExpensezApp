@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import {  StyleSheet, Image } from 'react-native';
-import { Container, Form, Item, Input, Button, Icon, Text} from 'native-base';
+import {  StyleSheet, Image, View, KeyboardAvoidingView } from 'react-native';
+import { Container, Form, Item, Input, Button, Icon, Text ,Content, Footer, FooterTab} from 'native-base';
 import GlobalFont from 'react-native-global-font';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoginScreeno from './LoginScreeno';
@@ -14,7 +14,21 @@ export default class AccountScreen extends Component {
         email:'',
         password:''
     };
+    this.getData()
   }
+
+  getData = async () => {
+    try {
+        const value = await AsyncStorage.getItem('uidd')
+        if (value !== null) {
+            console.log('0' + value)
+            this.setState({ uid: value })
+            // this.getUser
+        }
+    } catch (e) {
+        // error reading value
+    }
+}
 
   updateCustomer = () => {
 
@@ -72,15 +86,16 @@ export default class AccountScreen extends Component {
 }
 
   render() {
+    const { uid } = this.props.route.params
     return (
         <Container>
-
+                 <KeyboardAvoidingView behavior='position' style={styles.root} enabled={true}>
                 <Image
                     source={require('../Assests/usercircle.png')}
                     style={styles.Imgsty}
                 />
 
-                <Text style={styles.containerr} > User ID</Text>
+                <Text style={styles.containerr} > {uid}</Text>
 
                 <Form>
 
@@ -125,7 +140,32 @@ export default class AccountScreen extends Component {
                 </Button>
 
                 </Form>
+                </KeyboardAvoidingView>
 
+                <Content>
+
+                </Content>
+                <Footer >
+                    <FooterTab style={styles.Footer}>
+                        <Button vertical  onPress={() => this.props.navigation.navigate('ReportScreen')}>
+                            <Icon name="receipt" style={styles.Icon}/>
+                            <Text style={styles.Icon}>Report</Text>
+                        </Button>
+                        <Button vertical onPress={() => this.props.navigation.navigate('DataInputScreen', { uid: uid })}>
+                            <Icon name="pencil" style={styles.Icon} />
+                            <Text style={styles.Icon}>Input</Text>
+                        </Button>
+                        <Button vertical onPress={() => this.props.navigation.navigate('RecordScreen', { uid: uid })}>
+                            <Icon  name="list" style={styles.Icon} />
+                            <Text style={styles.Icon}>Record</Text>
+                        </Button>
+                        <Button vertical onPress={() => this.props.navigation.navigate('AccountScreen', { uid: uid })}>
+                            <Icon name="man"  style={styles.Icon}/>
+                            <Text style={styles.Icon}>Account</Text>
+                        </Button>
+                    </FooterTab>
+                </Footer>
+                
         </Container>
     );
   }
@@ -187,5 +227,16 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontFamily:'Quicksand-SemiBold',
         textAlign: 'center'
+    },
+    Footer: {
+            
+      backgroundColor: '#287BFF',
+    },
+    Icon: {
+      
+      color: '#fff',
+    },
+    root: {
+      paddingBottom: 150
     }
 });

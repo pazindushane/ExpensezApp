@@ -9,23 +9,35 @@ router.get("/allexpenses", async (req, res) => {
   });
   
 
-  router.get("/specexpenses/:uid", async (req, res) => {
 
-    const expenses = await Expenses.find({ uid: { '$in': req.params.uid } });
-    console.log(expenses);  
-    res.send(expenses);
-    // ({ uid: "C001" })
-    
-});
+router.get('/specexpenses/:uid',async (req,res)=>{
+  //const id="60dc0e0020aa31f976c5b4c2";
+  //const foundUser = await User.findOne ({ "email" : req.body.email });
+  const expenses = await Expenses.find(req.params);
+  res.send(expenses);
+  
+})
 
 router.get("/sumexpenses/:uid", async (req, res) => {
 
-  const expenses = await Expenses.find({ uid: { '$sum ': req.params.value } });
+  const expenses = await Expenses.aggregate([
+    {
+      $group:
+        {
+          uid: { '$in': req.params.uid },
+          total: { '$sum ': req.params.value }
+        }
+    }
+  ]);
   console.log(expenses);  
   res.send(expenses);
   // ({ uid: "C001" })
   
 });
+
+
+
+
 
   router.get("/abcd", async (req,res)=>{
     const expenses = await Expenses.find();

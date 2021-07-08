@@ -6,6 +6,7 @@ import GlobalFont from 'react-native-global-font';
 import DashBoard from './DashBoard';
 import SignupScreen from './SignupScreen';
 import Forgotpassword from './Forgotpassword';
+import ReportScreen from './ReportScreen';
 import DataInputScreen from './DataInputScreen';
 
 export default class LoginScreeno extends Component {
@@ -20,8 +21,8 @@ export default class LoginScreeno extends Component {
 
   storeData = async (value) => {
     try {
-      await AsyncStorage.setItem('uidd', 'logged')
-      console.log(value)
+      await AsyncStorage.setItem('uidd', this.state.uid)
+      console.log('Store Data :' + value)
     } catch (e) {
       // saving error
     }
@@ -31,8 +32,8 @@ export default class LoginScreeno extends Component {
     try {
       const value = await AsyncStorage.getItem('uidd')
       if(value !== null) {
-        console.log(value)
-        this.props.navigation.navigate(DashBoard)
+        console.log('getData :' + value)
+        this.props.navigation.navigate('ReportScreen', { uid: value })
       }else{
 
       }
@@ -48,27 +49,17 @@ export default class LoginScreeno extends Component {
     
    }
 
-   senddatat= ()=> {
-     this.props.navigation.navigate('App', {uidd: this.state.uid}
-     
-     )}
-
-     
-   
-  
-  
 
   Passwordmatch= (password)=> {
     if (this.state.password == password) {
       console.log("wadegoda")
       this.storeData()
-      // this.senddatat()
-      this.clear();
-      this.props.navigation.navigate(DashBoard)
+      // this.clear();
+      this.props.navigation.navigate('ReportScreen', { uid: this.state.uid })
       
     }else{
       console.log("not logged in");
-      alert("Login First");
+      alert("Incorrect Password");
     }
   }
 

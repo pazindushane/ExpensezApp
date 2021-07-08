@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { StyleSheet, Image, KeyboardAvoidingView } from 'react-native';
-import { Container, Form, Item, Input, Button, Text, CheckBox} from 'native-base';
+import { Container, Form, Item, Input, Button, Text, CheckBox, Content, Footer, FooterTab, Icon} from 'native-base';
 // import CheckBox from '@react-native-community/checkbox';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default class DataInputScreen extends Component {
   constructor() {
@@ -13,19 +14,19 @@ export default class DataInputScreen extends Component {
         uid: '',
         category: '',
         value: '',
-        date: new Date().toLocaleString(),
+        date: null,
         descrpiton: ''
 
     }
 
 }
 
-AddRecord = () => {
+AddRecord = (uid) => {
 
   fetch('http://192.168.1.187:3000/expenses/saveexpenses', {
   method: 'POST',
   body: JSON.stringify({
-                uid: this.state.uid,
+                uid: uid,
                 type: this.state.type,
                 category: this.state.category,
                 value: this.state.value,
@@ -39,6 +40,24 @@ AddRecord = () => {
 })
 .then((response) => response.json())
 .then((json) => console.log(json));
+}
+
+passNICToAnotherScreen(pass) {
+  console.log(pass+" - pass data");
+  
+}
+
+componentDidMount() {
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = today.getFullYear();
+
+  var todayo = mm + '/' + dd + '/' + yyyy;
+  this.setState({
+      date:todayo
+  })
+  console.log(todayo);
 }
 
 chechBoxOnePress = () => {
@@ -56,6 +75,8 @@ chechBoxTwoPress = () => {
   })
 }
   render() {
+    // const { nic } = this.props.route.params
+    const {uid}=this.props.route.params
     return (
       <Container>
         <KeyboardAvoidingView behavior='position' style={styles.root} enabled={true}>
@@ -63,7 +84,7 @@ chechBoxTwoPress = () => {
                     source={require('../Assests/usercircle.png')}
                     style={styles.Imgsty}
                 />
-                 <Text style={styles.containerr1} > User ID</Text>
+                 <Text style={styles.containerr1} > {uid} </Text>
 
                  <Text style={styles.containerr2} > Add Record</Text>
 
@@ -119,12 +140,36 @@ chechBoxTwoPress = () => {
                 
 
                 <Button block rounded info style={styles.logsty1}  onPress={() => {
-                            this.AddRecord();
+                            this.AddRecord(uid)
+                            this.passNICToAnotherScreen(uid);
                         }}>
                     <Text style={styles.lotsty}>Add</Text>
                 </Button>
 
                 </KeyboardAvoidingView>
+                <Content>
+                
+                </Content>
+                <Footer>
+                    <FooterTab style={styles.Footer}>
+                        <Button  vertical  onPress={()=>this.props.navigation.navigate('ReportScreen')}>
+                            <Icon name="receipt" style={styles.Icon} />
+                            <Text style={styles.Icon}>Report</Text>
+                        </Button>
+                        <Button vertical onPress={()=>this.props.navigation.navigate('DataInputScreen',{uid:uid})}>
+                            <Icon name="pencil" style={styles.Icon} />
+                            <Text style={styles.Icon}>Input</Text>
+                        </Button>
+                        <Button vertical  onPress={()=>this.props.navigation.navigate('RecordScreen',{uid:uid})}>
+                            <Icon  name="list"  style={styles.Icon}/>
+                            <Text style={styles.Icon}>Record</Text>
+                        </Button>
+                        <Button vertical onPress={()=>this.props.navigation.navigate('AccountScreen',{uid:uid})}>
+                            <Icon name="man"style={styles.Icon} />
+                            <Text style={styles.Icon}>Account</Text>
+                        </Button>
+                    </FooterTab>
+                </Footer>
       </Container>
     )
   }
@@ -215,5 +260,13 @@ containerr4:{
 },
 root: {
   paddingBottom: 90
+},
+Footer: {
+        
+  backgroundColor: '#287BFF',
+},
+Icon: {
+  
+  color: '#fff',
 }
 })

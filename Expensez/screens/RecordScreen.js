@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, StatusBar, FlatList, ScrollView, SafeAreaView, RefreshControl } from 'react-native'
-import { Container, Header, Content, List, ListItem, Thumbnail, CardItem, Text, Left, Body, Right, Button, Title } from 'native-base';
+import { Container, Header, Content, List, ListItem, Thumbnail, CardItem, Text, Left, Body, Right, Button, Title , Footer, FooterTab, Icon } from 'native-base';
 import GlobalFont from 'react-native-global-font';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 
 export default class RecordScreen extends Component {
   constructor(props) {
@@ -29,11 +31,11 @@ export default class RecordScreen extends Component {
     setTimeout(() => this.setState({ refreshing: false }), 1000);
   }
 
-  getData() {
+  getData(uid) {
 
-    return fetch('http://192.168.1.187:3000/expenses/allexpenses')
+    return fetch('http://192.168.1.187:3000/expenses/specexpenses/'+ uid)
       .then((response) => response.json())
-      .then((responseJson) => {
+      .then((responseJson) => { 
 
         this.setState({
           isLoading: false,
@@ -57,6 +59,7 @@ export default class RecordScreen extends Component {
   flatlistref = null;
 
   render() {
+    const { uid } = this.props.route.params
     return (
       <Container>
 
@@ -84,6 +87,32 @@ export default class RecordScreen extends Component {
                 }
                 keyExtractor={( item , index ) => index.toString()}
               />
+
+                <Content>
+                
+                </Content>
+                <Footer >
+                    <FooterTab style={styles.Footer}>
+                        <Button vertical  onPress={()=>this.props.navigation.navigate('ReportScreen')}>
+                            <Icon name="receipt"style={styles.Icon} />
+                            {/* <FontAwesomeIcon icon="fa-solid fa-file-contract" /> */}
+                            <Text style={styles.Icon}>Report</Text>
+                        </Button>
+                        <Button vertical onPress={()=>this.props.navigation.navigate('DataInputScreen',{uid:uid})}>
+                            <Icon name="pencil" style={styles.Icon}/>
+                            <Text style={styles.Icon}>Input</Text>
+                        </Button>
+                        <Button vertical  onPress={()=>this.props.navigation.navigate('RecordScreen',{uid:uid}), this.getData(uid)}>
+                            <Icon  name="list" style={styles.Icon} />
+                            {/* <FontAwesomeIcon icon="fa-solid fa-hand-holding-dollar" /> */}
+                            <Text style={styles.Icon}>Record</Text>
+                        </Button>
+                        <Button vertical onPress={()=>this.props.navigation.navigate('AccountScreen',{uid:uid})}>
+                            <Icon name="man" style={styles.Icon}/>
+                            <Text style={styles.Icon}>Account</Text>
+                        </Button>
+                    </FooterTab>
+                </Footer>
 
               </View>
 
@@ -146,5 +175,13 @@ Descrpiton: {
   color: '#2f3542',
   fontFamily:'Quicksand-SemiBold'
 
+},
+Footer: {
+        
+  backgroundColor: '#287BFF',
+},
+Icon: {
+  
+  color: '#fff',
 }
 })

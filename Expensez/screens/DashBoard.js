@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import {  View, StyleSheet } from 'react-native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Container, Header, Content, Footer, FooterTab, Button, Icon, Text, Row } from 'native-base';
 import FontAwesome, { SolidIcons, RegularIcons, BrandIcons } from 'react-native-fontawesome';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import AccountScreen from './AccountScreen';
 import DataInputScreen from './DataInputScreen';
 import ReportScreen from './ReportScreen';
@@ -29,7 +31,7 @@ export default class DashBoard extends Component {
     return (
         
 
-      <Tab.Navigator     tabBarOptions={{
+      <Tab.Navigator tabBarOptions={{
         
           showLabel: false,
           style: {
@@ -37,10 +39,8 @@ export default class DashBoard extends Component {
               height:65
           }
       }}>
-          {/* <header>
-            <text>{uidd}</text>
-          </header> */}
-          <Tab.Screen name="ReportScree" component={ReportScreen}   options={ 
+         
+          <Tab.Screen name="ReportScreen" component={ReportScreen}   options={ 
                     {  
                         tabBarIcon: ({ focused }) => (
                             <View style={styles.root}>
@@ -76,7 +76,7 @@ export default class DashBoard extends Component {
                     }
                 } />
                 
-                <Tab.Screen name="AccountScreenw" component={AccountScreen}  options={
+                <Tab.Screen name="AccountScreen" component={AccountScreen}  options={
                     {
                         
                         tabBarIcon: ({ focused }) => (

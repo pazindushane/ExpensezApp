@@ -9,6 +9,10 @@ import  SignupScreen  from './screens/SignupScreen';
 import  DashBoard  from './screens/DashBoard';
 import  Forgotpassword  from './screens/Forgotpassword';
 import  Recoverpassword  from './screens/Recoverpassword';
+import  ReportScreen  from './screens/ReportScreen';
+import  DataInputScreen  from './screens/DataInputScreen';
+import  RecordScreen  from './screens/RecordScreen';
+import  AccountScreen  from './screens/AccountScreen';
 // import  DataInputScreen  from './screens/DataInputScreen';
 
 
@@ -31,11 +35,13 @@ export default class App extends Component {
       <NavigationContainer>
         <Stack.Navigator >
           <Stack.Screen options={{headerShown: false}} name="LoginScreeno" component={LoginScreeno}  />
-          <Stack.Screen options={{headerShown: false}}  name="DashBoard" component={DashBoard}  />
           <Stack.Screen options={{headerShown: false}} name="SignupScreen" component={SignupScreen} />
           <Stack.Screen options={{headerShown: false}} name="Forgotpassword" component={Forgotpassword} />
           <Stack.Screen options={{headerShown: false}} name="Recoverpassword" component={Recoverpassword} />
-          {/* <Stack.Screen options={{headerShown: false}} name="DataInputScreen" component={DataInputScreen} /> */}
+          <Stack.Screen options={{headerShown: false}} name="ReportScreen" component={ReportScreen} />
+          <Stack.Screen options={{headerShown: false}} name="DataInputScreen" component={DataInputScreen} />
+          <Stack.Screen options={{headerShown: false}} name="RecordScreen" component={RecordScreen} />
+          <Stack.Screen options={{headerShown: false}} name="AccountScreen" component={AccountScreen} />
         </Stack.Navigator>
     </NavigationContainer>
     );
