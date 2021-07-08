@@ -54,9 +54,9 @@ export default class LoginScreeno extends Component {
     if (this.state.password == password) {
       console.log("wadegoda")
       this.storeData()
-      // this.clear();
-      this.props.navigation.navigate('ReportScreen', { uid: this.state.uid })
       
+      this.props.navigation.navigate('ReportScreen', { uid: this.state.uid })
+      this.clear();
     }else{
       console.log("not logged in");
       alert("Incorrect Password");

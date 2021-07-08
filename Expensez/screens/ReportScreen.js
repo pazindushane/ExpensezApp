@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Dimensions } from 'react-native';
 import { Container, Form, Item, Input, Button, Icon, Text ,Content, Footer, FooterTab} from 'native-base';
+import {
+  LineChart,
+  BarChart,
+  PieChart,
+  ProgressChart,
+  ContributionGraph,
+  StackedBarChart
+} from "react-native-chart-kit";
 
 
 export default class ReportScreen extends Component {
@@ -15,11 +23,55 @@ export default class ReportScreen extends Component {
 }
 
   render() {
+    const data = {
+      labels: ["Swim", "Bike", "Run"], // optional
+      data: [0.4, 0.6, 0.8]
+    };
     const { uid } = this.props.route.params
     return (
       <Container>
         <Text style={styles.containerr}> ReportScreen </Text>
         <Text style={styles.containerr2}> User : {uid}</Text>
+        {/* <Text>Bezier Line Chart</Text> */}
+        <View style={styles.chartstyle}>
+  <LineChart 
+    data={{
+      labels: ["January", "February", "March", "April", "May", "June"],
+      datasets: [
+        {
+          data: [
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100
+          ]
+        }
+      ]
+    }}
+    width={Dimensions.get("window").width} // from react-native
+    height={220}
+    yAxisLabel="$"
+    yAxisSuffix=""
+    yAxisInterval={1} // optional, defaults to 1
+    chartConfig={{
+      backgroundGradientFrom: "#287BFF",
+  backgroundGradientFromOpacity: "#287BFF",
+  backgroundGradientTo: "#287BFF",
+  backgroundGradientToOpacity: 0.5,
+  color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+  strokeWidth: 2, // optional, default 3
+  barPercentage: 0.5,
+  useShadowColorFromDataset: false // optional
+    }}
+    bezier
+    style={{
+      marginVertical: 8,
+      borderRadius: 16
+    }}
+  />
+  </View>
        
         <Content>
 
@@ -63,6 +115,8 @@ containerr2:{
   textAlign:'center',
   fontFamily:'Quicksand-SemiBold',
   top: 35
+},chartstyle:{
+  top: 125
 },
 Footer: {
         

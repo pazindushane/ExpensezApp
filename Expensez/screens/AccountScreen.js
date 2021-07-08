@@ -32,10 +32,10 @@ export default class AccountScreen extends Component {
 
   updateCustomer = () => {
 
-    fetch('http://192.168.1.187:3000/user/updateuser' + this.state.uid, {
+    fetch('http://192.168.1.187:3000/user/updateuser/'+ this.state.uid, {
     method: 'PUT',
     body: JSON.stringify({
-      uid: this.state.uid ,
+      // uid: this.state.uid ,
       name: this.state.name,
       email: this.state.email,
       password: this.state.password
@@ -85,6 +85,12 @@ export default class AccountScreen extends Component {
     GlobalFont.applyGlobal(fontName)
 }
 
+submitHandler = (e) =>{
+  e.preventDefault()
+  console.log(this.state);
+}
+
+
   render() {
     const { uid } = this.props.route.params
     return (
@@ -94,10 +100,10 @@ export default class AccountScreen extends Component {
                     source={require('../Assests/usercircle.png')}
                     style={styles.Imgsty}
                 />
+               <Form onSubmit = {this.submitHandler}>
+                <Text style={styles.containerr} value={this.setState.uid} name = "uid"> {uid}</Text>
 
-                <Text style={styles.containerr} > {uid}</Text>
-
-                <Form>
+               
 
                 <Item rounded style={styles.uidsty1}>
                     <Input type = "text" placeholder="User Name" value={this.state.name}
