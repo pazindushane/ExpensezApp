@@ -33,7 +33,7 @@ export default class LoginScreeno extends Component {
       const value = await AsyncStorage.getItem('uidd')
       if(value !== null) {
         console.log('getData :' + value)
-        this.props.navigation.navigate('ReportScreen', { uid: value })
+        this.props.navigation.navigate('DataInputScreen', { uid: value })
       }else{
 
       }
@@ -55,7 +55,7 @@ export default class LoginScreeno extends Component {
       console.log("wadegoda")
       this.storeData()
       
-      this.props.navigation.navigate('ReportScreen', { uid: this.state.uid })
+      this.props.navigation.navigate('DataInputScreen', { uid: this.state.uid })
       this.clear();
     }else{
       console.log("not logged in");

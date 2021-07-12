@@ -16,9 +16,13 @@ export default class RecordScreen extends Component {
       isLoading: true,
       refreshing: false,
     }
+    const { uid } = this.props.route.params
+    this.getData(uid)
 
-    this.getData()
+    
   }
+
+ 
 
   scrollToTopAndRefresh() {
     this.flatlistref.scrollToOffset({ y: 0, animated: true });
@@ -93,7 +97,7 @@ export default class RecordScreen extends Component {
                 </Content>
                 <Footer >
                     <FooterTab style={styles.Footer}>
-                        <Button vertical  onPress={()=>this.props.navigation.navigate('ReportScreen')}>
+                        <Button vertical  onPress={()=>this.props.navigation.navigate('ReportScreen',{uid:uid})}>
                             <Icon name="receipt"style={styles.Icon} />
                             {/* <FontAwesomeIcon icon="fa-solid fa-file-contract" /> */}
                             <Text style={styles.Icon}>Report</Text>
@@ -102,7 +106,7 @@ export default class RecordScreen extends Component {
                             <Icon name="pencil" style={styles.Icon}/>
                             <Text style={styles.Icon}>Input</Text>
                         </Button>
-                        <Button vertical  onPress={()=>this.props.navigation.navigate('RecordScreen',{uid:uid}), this.getData(uid)}>
+                        <Button vertical  onPress={()=>this.props.navigation.navigate('RecordScreen',{uid:uid})}>
                             <Icon  name="list" style={styles.Icon} />
                             {/* <FontAwesomeIcon icon="fa-solid fa-hand-holding-dollar" /> */}
                             <Text style={styles.Icon}>Record</Text>
@@ -144,16 +148,14 @@ Card: {
 Date: {
 
   flexDirection: 'row',
-  left: 238,
-  color: '#287BFF',
+  left: 225,
+  color: '#2ecc71',
   fontFamily:'Quicksand-SemiBold'
 },
 Value: {
   fontSize: 35,
   color: '#287BFF',
   fontFamily:'Quicksand-SemiBold'
-
-
 
 },
 Type: {

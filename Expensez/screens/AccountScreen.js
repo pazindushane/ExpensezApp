@@ -15,6 +15,8 @@ export default class AccountScreen extends Component {
         password:''
     };
     this.getData()
+    const { uid } = this.props.route.params
+    this.GetusersName(uid)
   }
 
   getData = async () => {
@@ -29,6 +31,28 @@ export default class AccountScreen extends Component {
         // error reading value
     }
 }
+
+GetusersName= (uid) => {
+  fetch('http://192.168.1.187:3000/user/oneuser/' + uid, { method: 'GET' })
+      .then((response) => response.json())
+      .then((json)=>this.setState({
+        displaynames: (json.data.name)
+      }))
+      
+}
+
+// GetusersData = () => {
+//   fetch('http://192.168.1.187:3000/user/oneuser/' + this.state.uid)
+//   .then((response) => response.json())
+//   .then((json) => console.log(json),
+//   Getuse(json.data.name));
+// }
+
+// Getuse = (name) =>{
+//   // console.log(name);
+//   // this.setState(({this.state.name }): 'My Changed Text')
+//   this.setState.name(name)
+// }
 
   updateCustomer = () => {
 
@@ -47,7 +71,8 @@ export default class AccountScreen extends Component {
   })
     .then((response) => response.json())
     .then((json) => console.log(json),
-    this.clear()
+    this.clear(),
+    alert("Successfully Added")
     );
   }
 
@@ -102,7 +127,8 @@ submitHandler = (e) =>{
                 />
                <Form onSubmit = {this.submitHandler}>
                 <Text style={styles.containerr} value={this.setState.uid} name = "uid"> {uid}</Text>
-
+                <Text style={styles.containerr2}>{this.state.displaynames} </Text>
+                {/* <Text style={styles.containerr} value={this.state.name} name = "uid"> {name}</Text> */}
                
 
                 <Item rounded style={styles.uidsty1}>
@@ -153,7 +179,7 @@ submitHandler = (e) =>{
                 </Content>
                 <Footer >
                     <FooterTab style={styles.Footer}>
-                        <Button vertical  onPress={() => this.props.navigation.navigate('ReportScreen')}>
+                        <Button vertical  onPress={() => this.props.navigation.navigate('ReportScreen',{uid:uid})}>
                             <Icon name="receipt" style={styles.Icon}/>
                             <Text style={styles.Icon}>Report</Text>
                         </Button>
@@ -189,11 +215,21 @@ const styles = StyleSheet.create({
     containerr:{
         color: '#287BFF',
         // fontWeight: 'bold',
-        fontSize: 35,
+        fontSize: 30,
         bottom:-35,
+        alignSelf:'center',
         textAlign:'center',
         fontFamily:'Quicksand-SemiBold',
     },
+    containerr2:{
+      color: '#287BFF',
+      // fontWeight: 'bold',
+      fontSize: 20,
+      bottom:-35,
+      textAlign:'center',
+      alignSelf:'center',
+      fontFamily:'Quicksand-SemiBold',
+  },
     uidsty1:{
         width:250,
         alignSelf: 'center',

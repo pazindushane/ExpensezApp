@@ -15,9 +15,11 @@ export default class DataInputScreen extends Component {
         category: '',
         value: '',
         date: null,
-        descrpiton: ''
+        descrpiton: '',
+        total:0
 
     }
+    
 
 }
 
@@ -31,7 +33,8 @@ AddRecord = (uid) => {
                 category: this.state.category,
                 value: this.state.value,
                 date: this.state.date,
-                descrpiton: this.state.descrpiton
+                descrpiton: this.state.descrpiton,
+                total:this.state.total
   }),
   headers: {
      Accept : 'application/json',
@@ -39,8 +42,13 @@ AddRecord = (uid) => {
   },
 })
 .then((response) => response.json())
-.then((json) => console.log(json));
+.then((json) => console.log(json),
+   this.clear(),
+    alert("Successfully Updated")
+);
 }
+
+
 
 passNICToAnotherScreen(pass) {
   console.log(pass+" - pass data");
@@ -73,6 +81,14 @@ chechBoxTwoPress = () => {
       chechBoxTwo: true,
       type: 'Expence'
   })
+}
+
+clear = () =>{
+  this.setState({
+    value: "",
+    descrpiton: "",
+    category: ""
+  });
 }
   render() {
     // const { nic } = this.props.route.params
@@ -152,7 +168,7 @@ chechBoxTwoPress = () => {
                 </Content>
                 <Footer>
                     <FooterTab style={styles.Footer}>
-                        <Button  vertical  onPress={()=>this.props.navigation.navigate('ReportScreen')}>
+                        <Button  vertical  onPress={()=>this.props.navigation.navigate('ReportScreen',{uid:uid})}>
                             <Icon name="receipt" style={styles.Icon} />
                             <Text style={styles.Icon}>Report</Text>
                         </Button>
@@ -187,7 +203,7 @@ containerr1:{
   color: '#287BFF',
   fontSize: 28,
   bottom:30,
-  left:20,
+  left:50,
   textAlign:'center',
   fontFamily:'Quicksand-SemiBold',
 },

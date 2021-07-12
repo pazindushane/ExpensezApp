@@ -11,29 +11,40 @@ router.get("/allexpenses", async (req, res) => {
 
 
 router.get('/specexpenses/:uid',async (req,res)=>{
-  //const id="60dc0e0020aa31f976c5b4c2";
-  //const foundUser = await User.findOne ({ "email" : req.body.email });
   const expenses = await Expenses.find(req.params);
   res.send(expenses);
   
 })
 
 router.get("/sumexpenses/:uid", async (req, res) => {
-
-  const expenses = await Expenses.aggregate([
-    {
-      $group:
-        {
-          uid: { '$in': req.params.uid },
-          total: { '$sum ': req.params.value }
+    const expenses = await Expenses.aggregate([
+      { $match: { type: "Income" , uid: req.params.uid} },
+      {
+        "$group": {
+          "_id": "$uid",
+          "total": { $sum: "$value" }
         }
+      }
+    ]);
+    // console.log(expenses);  
+    res.send(expenses);
+});
+
+router.get("/incexpenses/:uid", async (req, res) => {
+  const expenses = await Expenses.aggregate([
+    { $match: { type: "Expence" , uid: req.params.uid} },
+    {
+      "$group": {
+        "_id": "$uid",
+        "total": { $sum: "$value" }
+      }
     }
   ]);
-  console.log(expenses);  
+  // console.log(expenses);  
   res.send(expenses);
-  // ({ uid: "C001" })
-  
 });
+
+
 
 
 

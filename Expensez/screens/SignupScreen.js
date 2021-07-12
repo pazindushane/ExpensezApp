@@ -33,7 +33,8 @@ export default class SignupScreen extends Component {
     .then((response) => response.json())
     .then((json) => console.log(json),
     this.props.navigation.navigate(LoginScreeno),
-    this.clear()
+    this.clear(),
+    alert("Successfully Registered")
     );
   }
 
